@@ -46,7 +46,7 @@
       <div class="mt4-l mt1 mb4 mw6 br3 center breadcrumb relative z-0 f6 pb2">
         <ul class="list ph0 tc-l tl">
           <li class="di">
-            <inertia-link :href="'/' + $page.props.auth.company.id + '/dashboard'">{{ $t('app.breadcrumb_dashboard') }}</inertia-link>
+            <inertia-link :href="$route('dashboard.index', $page.props.auth.company.id)">{{ $t('app.breadcrumb_dashboard') }}</inertia-link>
           </li>
           <li class="di">
             <inertia-link :href="'/' + $page.props.auth.company.id + '/projects'">{{ $t('app.breadcrumb_project_list') }}</inertia-link>
@@ -335,7 +335,7 @@ export default {
     submit() {
       this.loadingState = 'loading';
 
-      axios.post('/' + this.$page.props.auth.company.id + '/projects/' + this.project.id + '/members/store', this.form)
+      axios.post('/' + this.$page.props.auth.company.id + '/projects/' + this.project.id + '/members', this.form)
         .then(response => {
           flash(this.$t('project.members_index_add_success'), 'success');
           this.loadingState = null;
@@ -351,16 +351,12 @@ export default {
     },
 
     remove(employee) {
-      this.form.employee = employee;
-
-      axios.post('/' + this.$page.props.auth.company.id + '/projects/' + this.project.id + '/members/remove', this.form)
+      axios.delete('/' + this.$page.props.auth.company.id + '/projects/' + this.project.id + '/members/' + employee)
         .then(response => {
           flash(this.$t('project.members_index_remove_success'), 'success');
 
           var id = this.localMembers.findIndex(x => x.id == employee);
           this.localMembers.splice(id, 1);
-
-          this.form.employee = null;
         })
         .catch(error => {
           this.loadingState = null;

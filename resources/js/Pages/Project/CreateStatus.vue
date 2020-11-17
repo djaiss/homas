@@ -15,7 +15,7 @@
       <div class="mt4-l mt1 mw6 br3 bg-white box center breadcrumb relative z-0 f6 pb2">
         <ul class="list ph0 tc-l tl">
           <li class="di">
-            <inertia-link :href="'/' + $page.props.auth.company.id + '/dashboard'">{{ $t('app.breadcrumb_dashboard') }}</inertia-link>
+            <inertia-link :href="$route('dashboard.index', $page.props.auth.company.id)">{{ $t('app.breadcrumb_dashboard') }}</inertia-link>
           </li>
           <li class="di">
             ...
@@ -159,7 +159,7 @@ export default {
     submit() {
       this.loadingState = 'loading';
 
-      axios.put('/' + this.$page.props.auth.company.id + '/projects/' + this.project.id + '/status', this.form)
+      axios.post('/' + this.$page.props.auth.company.id + '/projects/' + this.project.id + '/status', this.form)
         .then(response => {
           this.$inertia.visit(response.data.data.url);
         })

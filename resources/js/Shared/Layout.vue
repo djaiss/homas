@@ -67,7 +67,7 @@ nav {
             <inertia-link :href="'/' + $page.props.auth.company.id + '/projects'" class="mr1 no-underline pa2 bb-0 special" data-cy="header-teams-link">
               <span class="mr1">👨‍🚀</span> Projects
             </inertia-link>
-            <inertia-link :href="'/' + $page.props.auth.company.id + '/dashboard'" class="mr1 no-underline pa2 bb-0 special">
+            <inertia-link :href="$route('dashboard.index', $page.props.auth.company.id)" class="mr1 no-underline pa2 bb-0 special">
               <span class="mr1">🏡</span> {{ $t('app.header_home') }}
             </inertia-link>
             <inertia-link :href="'/' + $page.props.auth.company.id + '/employees'" class="mr1 no-underline pa2 bb-0 special">
@@ -79,7 +79,7 @@ nav {
             <a data-cy="header-find-link" class="mr1 no-underline pa2 bb-0 special pointer" @click="showFindModal">
               <span class="mr1">🔍</span> {{ $t('app.header_find') }}
             </a>
-            <inertia-link v-if="$page.props.auth.company && $page.props.auth.employee.permission_level <= 200" :href="'/' + $page.props.auth.company.id + '/account'" data-cy="header-adminland-link" class="no-underline pa2 bb-0 special">
+            <inertia-link v-if="$page.props.auth.company && $page.props.auth.employee.permission_level <= 200" :href="$route('account.index', $page.props.auth.company.id)" data-cy="header-adminland-link" class="no-underline pa2 bb-0 special">
               <span class="mr1">👮‍♂️</span> Adminland
             </inertia-link>
           </div>
@@ -334,7 +334,7 @@ export default {
       }, 500),
 
     toggleHelp() {
-      axios.post('/help')
+      axios.put('/help')
         .then(response => {
           this.$page.props.auth.user.show_help = response.data.data;
         })

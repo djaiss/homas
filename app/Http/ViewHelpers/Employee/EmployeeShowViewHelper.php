@@ -75,15 +75,15 @@ class EmployeeShowViewHelper
                 'name' => $employee->status->name,
             ],
             'url' => [
-                'audit_log' => route('employee.show.logs', [
+                'audit_log' => route('employees.logs.index', [
                     'company' => $company,
                     'employee' => $employee,
                 ]),
-                'edit' => route('employee.show.edit', [
+                'edit' => route('employees.edit', [
                     'company' => $company,
                     'employee' => $employee,
                 ]),
-                'delete' => route('account.delete', [
+                'delete' => route('account.employees.delete', [
                     'company' => $company,
                     'employee' => $employee,
                 ]),
@@ -411,7 +411,7 @@ class EmployeeShowViewHelper
                 'team_leader' => is_null($team->leader) ? null : [
                     'id' => $team->leader->id,
                 ],
-                'url' => route('team.show', [
+                'url' => route('teams.show', [
                     'company' => $company,
                     'team' => $team,
                 ]),
@@ -485,7 +485,7 @@ class EmployeeShowViewHelper
                 'title' => $ship->title,
                 'description' => $ship->description,
                 'employees' => ($employeeCollection->count() > 0) ? $employeeCollection->all() : null,
-                'url' => route('ships.show', [
+                'url' => route('teams.ships.show', [
                     'company' => $employee->company,
                     'team' => $ship->team,
                     'ship' => $ship->id,
@@ -556,7 +556,7 @@ class EmployeeShowViewHelper
                 'converted_amount' => $expense->converted_amount ?
                     MoneyHelper::format($expense->converted_amount, $expense->converted_to_currency) :
                     null,
-                'url' => route('employee.expenses.show', [
+                'url' => route('employees.expenses.show', [
                     'company' => $employee->company,
                     'employee' => $employee,
                     'expense' => $expense,
@@ -565,7 +565,7 @@ class EmployeeShowViewHelper
         }
 
         return [
-            'url' => route('employee.expenses.index', [
+            'url' => route('employees.expenses.index', [
                 'company' => $employee->company,
                 'employee' => $employee,
             ]),
